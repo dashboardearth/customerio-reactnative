@@ -25,7 +25,9 @@ def getExtOrIntegerDefault(name) {
 }
 
 android {
-  namespace 'io.customer.reactnative.sdk'
+  buildFeatures {
+    viewBinding true
+  }
   compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
   defaultConfig {
     minSdkVersion getExtOrIntegerDefault('minSdkVersion')
