@@ -1,53 +1,39 @@
 import CioInternalCommon
-import CioTracking
 import Foundation
 
 class MessagingPushImplementation: MessagingPushInstance {
-    let siteId: String
+    let moduleConfig: MessagingPushConfigOptions
     let logger: Logger
     let jsonAdapter: JsonAdapter
-    let sdkConfig: SdkConfig
-    let backgroundQueue: Queue
-    let sdkInitializedUtil: SdkInitializedUtil
+    let eventBusHandler: EventBusHandler
 
-    private var customerIO: CustomerIO? {
-        sdkInitializedUtil.customerio
-    }
-
-    /// testing init
-    init(
-        logger: Logger,
-        jsonAdapter: JsonAdapter,
-        sdkConfig: SdkConfig,
-        backgroundQueue: Queue,
-        sdkInitializedUtil: SdkInitializedUtil
-    ) {
-        self.siteId = sdkConfig.siteId
-        self.logger = logger
-        self.jsonAdapter = jsonAdapter
-        self.sdkConfig = sdkConfig
-        self.backgroundQueue = backgroundQueue
-        self.sdkInitializedUtil = sdkInitializedUtil
-    }
-
-    init(diGraph: DIGraph) {
-        self.siteId = diGraph.sdkConfig.siteId
+    init(diGraph: DIGraphShared, moduleConfig: MessagingPushConfigOptions) {
+        self.moduleConfig = moduleConfig
         self.logger = diGraph.logger
         self.jsonAdapter = diGraph.jsonAdapter
-        self.sdkConfig = diGraph.sdkConfig
-        self.backgroundQueue = diGraph.queue
-        self.sdkInitializedUtil = SdkInitializedUtilImpl()
+        self.eventBusHandler = diGraph.eventBusHandler
     }
 
     func deleteDeviceToken() {
-        customerIO?.deleteDeviceToken()
+        eventBusHandler.postEvent(DeleteDeviceTokenEvent())
     }
 
     func registerDeviceToken(_ deviceToken: String) {
-        customerIO?.registerDeviceToken(deviceToken)
+        eventBusHandler.postEvent(RegisterDeviceTokenEvent(token: deviceToken))
     }
 
     func trackMetric(deliveryID: String, event: Metric, deviceToken: String) {
-        customerIO?.trackMetric(deliveryID: deliveryID, event: event, deviceToken: deviceToken)
+        eventBusHandler.postEvent(TrackMetricEvent(deliveryID: deliveryID, event: event.rawValue, deviceToken: deviceToken))
+    }
+
+    func trackMetricFromNSE(
+        deliveryID: String,
+        event: Metric,
+        deviceToken: String
+    ) {
+        // Access richPushDeliveryTracker from DIGraphShared.shared directly as it is only required for NSE.
+        // Keeping it as class property results in initialization of UserAgentUtil before SDK client is overridden by wrapper SDKs.
+        // In future, we can improve how we access SdkClient so that we don't need to worry about initialization order.
+        DIGraphShared.shared.richPushDeliveryTracker.trackMetric(token: deviceToken, event: event, deliveryId: deliveryID) { _ in }
     }
 }
