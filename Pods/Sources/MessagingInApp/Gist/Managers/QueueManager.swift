@@ -91,7 +91,7 @@ class QueueManager {
             guard let self = self, newPollingInterval != state.pollInterval else { return }
 
             logger.logWithModuleTag("Updating polling interval to: \(newPollingInterval) seconds", level: .debug)
-            inAppMessageManager.dispatch(action: .setPollingInterval(interval: newPollingInterval))
+            inAppMessageManager.dispatch(action: .setPollingInterval(interval: 5))
         }
     }
 }

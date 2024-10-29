@@ -19,7 +19,7 @@ struct InAppMessageState: Equatable, CustomStringConvertible {
         siteId: String = "",
         dataCenter: String = "",
         environment: GistEnvironment = .production,
-        pollInterval: Double = 600,
+        pollInterval: Double = 5,
         userId: String? = nil,
         currentRoute: String? = nil,
         currentMessageState: MessageState = .initial,
