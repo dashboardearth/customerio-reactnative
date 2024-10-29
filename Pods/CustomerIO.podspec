@@ -4,15 +4,15 @@
 # Example: CustomerIO/DataPipelines is an alias for the published pod CustomerIODataPipelines
 
 Pod::Spec.new do |spec|
-  spec.name         = "CustomerIO"
-  spec.version      = "3.5.1" # Don't modify this line - it's automatically updated
+  spec.name         = "CustomerIO-DashboardEarth"
+  spec.version      = "3.5.1-modified" # Don't modify this line - it's automatically updated
   spec.summary      = "Official Customer.io SDK for iOS."  
-  spec.homepage     = "https://github.com/customerio/customerio-ios"
+  spec.homepage     = "https://github.com/dashboardearth/customerio-ios"
   spec.documentation_url = 'https://customer.io/docs/sdk/ios/'
-  spec.changelog    = "https://github.com/customerio/customerio-ios/blob/#{spec.version.to_s}/CHANGELOG.md"
+  spec.changelog    = "https://github.com/dashboardearth/customerio-ios/blob/#{spec.version.to_s}/CHANGELOG.md"
   spec.license      = { :type => "MIT", :file => "LICENSE" }
   spec.author       = { "CustomerIO Team" => "win@customer.io" }
-  spec.source       = { :git => 'https://github.com/customerio/customerio-ios.git', :tag => spec.version.to_s }
+  spec.source       = { :git => 'https://github.com/dashboardearth/customerio-ios.git', :branch => 'master' }
 
   spec.swift_version = '5.3'
   spec.cocoapods_version = '>= 1.11.0'
@@ -28,26 +28,26 @@ Pod::Spec.new do |spec|
   # In the future, we can use: `~> X.X.X` which matches by semantic version rules.
 
   spec.subspec "MessagingPush" do |ss|
-    ss.dependency "CustomerIOMessagingPush", "= #{spec.version.to_s}"
+    ss.dependency "CustomerIOMessagingPush-DashboardEarth", "= #{spec.version.to_s}"
   end
   
   spec.subspec "DataPipelines" do |ss|
-    ss.dependency "CustomerIODataPipelines", "= #{spec.version.to_s}"
+    ss.dependency "CustomerIODataPipelines-DashboardEarth", "= #{spec.version.to_s}"
   end
   
   spec.subspec "Migration" do |ss|
-    ss.dependency "CustomerIOTrackingMigration", "= #{spec.version.to_s}"
+    ss.dependency "CustomerIOTrackingMigration-DashboardEarth", "= #{spec.version.to_s}"
   end
 
   spec.subspec "MessagingPushAPN" do |ss|
-    ss.dependency "CustomerIOMessagingPushAPN", "= #{spec.version.to_s}"
+    ss.dependency "CustomerIOMessagingPushAPN-DashboardEarth", "= #{spec.version.to_s}"
   end
 
   spec.subspec "MessagingPushFCM" do |ss|
-    ss.dependency "CustomerIOMessagingPushFCM", "= #{spec.version.to_s}"
+    ss.dependency "CustomerIOMessagingPushFCM-DashboardEarth", "= #{spec.version.to_s}"
   end
 
   spec.subspec "MessagingInApp" do |ss|
-    ss.dependency "CustomerIOMessagingInApp", "= #{spec.version.to_s}"
+    ss.dependency "CustomerIOMessagingInApp-DashboardEarth", "= #{spec.version.to_s}"
   end
 end
