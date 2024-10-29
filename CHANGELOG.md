@@ -1,3 +1,111 @@
+## [4.0.2](https://github.com/customerio/customerio-reactnative/compare/4.0.1...4.0.2) (2024-10-25)
+
+### Bug Fixes
+
+* dismisses keyboard when an in-app message appears ([#350](https://github.com/customerio/customerio-reactnative/issues/350)) ([74b2379](https://github.com/customerio/customerio-reactnative/commit/74b2379fb435e450b05321bf80ee18bff1d4a1ab))
+
+## [4.0.1](https://github.com/customerio/customerio-reactnative/compare/4.0.0...4.0.1) (2024-10-16)
+
+### Bug Fixes
+
+* ci workflow for updating android version automatically ([b477fbc](https://github.com/customerio/customerio-reactnative/commit/b477fbc8e4f742a521289e63d4aafe297a88cde0))
+
+## [4.0.0](https://github.com/customerio/customerio-reactnative/compare/3.9.1...4.0.0) (2024-10-16)
+
+### ⚠ BREAKING CHANGES
+
+* react native as a source for Data pipelines (#349)
+
+### Features
+
+* react native as a source for Data pipelines ([#349](https://github.com/customerio/customerio-reactnative/issues/349)) ([6665c9f](https://github.com/customerio/customerio-reactnative/commit/6665c9f9c4a8d4f175bae86f0e0294e0dc3b8bd1))
+
+## [3.9.1](https://github.com/customerio/customerio-reactnative/compare/3.9.0...3.9.1) (2024-10-10)
+
+### Bug Fixes
+
+* firebase version upgrade ([#344](https://github.com/customerio/customerio-reactnative/issues/344)) ([11d17e1](https://github.com/customerio/customerio-reactnative/commit/11d17e119f003593bc9a2dde7644bb2b3314bd45))
+
+## [3.9.0](https://github.com/customerio/customerio-reactnative/compare/3.8.0...3.9.0) (2024-08-28)
+
+### Features
+
+* fetch in-app messages on new profile identification ([#307](https://github.com/customerio/customerio-reactnative/issues/307)) ([cb272c2](https://github.com/customerio/customerio-reactnative/commit/cb272c2ce0b406a58c6ddad951682cc21071fbd5))
+
+## [3.8.0](https://github.com/customerio/customerio-reactnative/compare/3.7.2...3.8.0) (2024-07-02)
+
+### Features
+
+* do not show modal message if screen changes and page rule mismatches ([#285](https://github.com/customerio/customerio-reactnative/issues/285)) ([478f644](https://github.com/customerio/customerio-reactnative/commit/478f6445fbc5dd2a92ae7ab32955c7fa5f92e812))
+
+## [3.7.2](https://github.com/customerio/customerio-reactnative/compare/3.7.1...3.7.2) (2024-06-26)
+
+### Bug Fixes
+
+* differentiate every push event handler installed in app ([#283](https://github.com/customerio/customerio-reactnative/issues/283)) ([84d7259](https://github.com/customerio/customerio-reactnative/commit/84d7259045affbc84c00512711c39cee6f7b3d31))
+
+## [3.7.1](https://github.com/customerio/customerio-reactnative/compare/3.7.0...3.7.1) (2024-06-13)
+
+### Bug Fixes
+
+* 3rd party SDK compatibility when SDK forwards push events back to us ([#273](https://github.com/customerio/customerio-reactnative/issues/273)) ([456da1e](https://github.com/customerio/customerio-reactnative/commit/456da1ee961eccaa379cc8e8aee60e4937f6a30d))
+
+## [3.7.0](https://github.com/customerio/customerio-reactnative/compare/3.6.0...3.7.0) (2024-04-18)
+
+
+### Features
+
+* support for android gradle plugin 8 ([#258](https://github.com/customerio/customerio-reactnative/issues/258)) ([3544e66](https://github.com/customerio/customerio-reactnative/commit/3544e6626c90e0fb4f75e9bf7d94ea8e5da73906))
+
+## [3.6.0](https://github.com/customerio/customerio-reactnative/compare/3.5.4...3.6.0) (2024-04-10)
+
+
+### Features
+
+* privacy manifest files ([#254](https://github.com/customerio/customerio-reactnative/issues/254)) ([6a7c1f1](https://github.com/customerio/customerio-reactnative/commit/6a7c1f1c33188b15edc54fea60650fb58361a3ff))
+
+## [3.5.4](https://github.com/customerio/customerio-reactnative/compare/3.5.3...3.5.4) (2024-04-09)
+
+
+### Bug Fixes
+
+* added proguard rules for R8 strict mode ([#253](https://github.com/customerio/customerio-reactnative/issues/253)) ([6686206](https://github.com/customerio/customerio-reactnative/commit/6686206b4e08dda711ea304d2fc291f27152b0c6))
+
+## [3.5.3](https://github.com/customerio/customerio-reactnative/compare/3.5.2...3.5.3) (2024-03-19)
+
+
+### Bug Fixes
+
+* do not bundle .md files in cocoapods deployments ([a815336](https://github.com/customerio/customerio-reactnative/commit/a8153361ef08cff75d25e1eb3e4ed1da83fbc30a))
+
+## [3.5.2](https://github.com/customerio/customerio-reactnative/compare/3.5.1...3.5.2) (2024-03-05)
+
+
+### Bug Fixes
+
+* expo users reported app crash on didFailToRegisterForRemoteNotificationsWithError ([#244](https://github.com/customerio/customerio-reactnative/issues/244)) ([fb9a464](https://github.com/customerio/customerio-reactnative/commit/fb9a46438717b34c98c9f356daa9477bb2c7d95f))
+
+## [3.5.1](https://github.com/customerio/customerio-reactnative/compare/3.5.0...3.5.1) (2024-02-26)
+
+
+### Bug Fixes
+
+* edge case for image download in rich push ([#242](https://github.com/customerio/customerio-reactnative/issues/242)) ([04b63f8](https://github.com/customerio/customerio-reactnative/commit/04b63f86a303708585fcc365d465d02321fd1a3e))
+
+## [3.5.0](https://github.com/customerio/customerio-reactnative/compare/3.4.0...3.5.0) (2024-02-22)
+
+
+### Features
+
+* new header for polling interval and enable ios logging for in-app ([#237](https://github.com/customerio/customerio-reactnative/issues/237)) ([f77ff0e](https://github.com/customerio/customerio-reactnative/commit/f77ff0ecccab2d704d283e5e383065164ccd67e0))
+
+## [3.4.0](https://github.com/customerio/customerio-reactnative/compare/3.3.2...3.4.0) (2024-02-12)
+
+
+### Features
+
+* increase opened metrics reliability and 3rd party push SDK compatibility ([#236](https://github.com/customerio/customerio-reactnative/issues/236)) ([514b719](https://github.com/customerio/customerio-reactnative/commit/514b7197b7a252bc835eec2c000ae7669f4fb391))
+
 ## [3.3.2](https://github.com/customerio/customerio-reactnative/compare/3.3.1...3.3.2) (2023-11-14)
 
 

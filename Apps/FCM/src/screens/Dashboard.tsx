@@ -1,5 +1,5 @@
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
-import { PushPermissionStatus } from 'customerio-reactnative';
+import { CioPushPermissionStatus } from 'customerio-reactnative';
 import React from 'react';
 import {
   Image,
@@ -24,6 +24,8 @@ import { useUserStateContext } from '../state/userState';
 import { generateRandomNumber } from '../utils/helpers';
 import { navigateToScreen } from '../utils/navigation';
 import Prompts from '../utils/prompts';
+import { Notification, Notifications } from 'react-native-notifications';
+import { CustomerIO } from 'customerio-reactnative';
 
 const pushPermissionAlertTitle = 'Push Permission';
 
@@ -68,38 +70,36 @@ const Dashboard: React.FC<DashboardProps> = ({ navigation }) => {
     Prompts.showSnackbar({ text: 'Event sent successfully' });
   };
 
-  const handlePushPermissionCheck = () => {
-    getPushPermissionStatus().then((status: PushPermissionStatus) => {
-      switch (status) {
-        case PushPermissionStatus.Granted:
-          Prompts.showAlert({
-            title: pushPermissionAlertTitle,
-            message: 'Push notifications are enabled on this device',
-          });
-          break;
-
-        case PushPermissionStatus.Denied:
-        case PushPermissionStatus.NotDetermined:
-          requestPushPermission();
-          break;
-      }
-    });
+  const handlePushPermissionCheck = async () => {
+    const status = await getPushPermissionStatus();
+    switch (status) {
+      case CioPushPermissionStatus.Granted:
+        Prompts.showAlert({
+          title: pushPermissionAlertTitle,
+          message: 'Push notifications are enabled on this device',
+        });
+        break;
+  
+      case CioPushPermissionStatus.Denied:
+      case CioPushPermissionStatus.NotDetermined:
+        requestPushPermission();
+        break;
+    }
   };
 
-  const requestPushPermission = () => {
+  const requestPushPermission = async () => {
     let options = { ios: { sound: true, badge: true } };
 
-    requestPushNotificationsPermission(options)
-      .then((status: PushPermissionStatus) => {
+    const status = await requestPushNotificationsPermission(options);
         switch (status) {
-          case PushPermissionStatus.Granted:
+          case CioPushPermissionStatus.Granted:
             Prompts.showSnackbar({
               text: 'Push notifications are now enabled on this device',
             });
             break;
 
-          case PushPermissionStatus.Denied:
-          case PushPermissionStatus.NotDetermined:
+          case CioPushPermissionStatus.Denied:
+          case CioPushPermissionStatus.NotDetermined:
             Prompts.showAlert({
               title: pushPermissionAlertTitle,
               message:
@@ -120,14 +120,6 @@ const Dashboard: React.FC<DashboardProps> = ({ navigation }) => {
             });
             break;
         }
-      })
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .catch((error: any) => {
-        Prompts.showAlert({
-          title: pushPermissionAlertTitle,
-          message: 'Unable to request permission. Please try again later.',
-        });
-      });
   };
 
   const handleSettingsPress = () => {
@@ -144,6 +136,15 @@ const Dashboard: React.FC<DashboardProps> = ({ navigation }) => {
         handlePushPermissionCheck();
         break;
 
+        case ActionItem.SHOW_LOCAL_PUSH:
+          // How we are able to test behavior of pushes sent by other SDKs, not CIO.
+          // Have 3rd party SDK create a push. We expect the SDK is able to handle this push that it owns.
+          Notifications.postLocalNotification({
+            body: 'Try clicking on me. The SDK that sent this should also be able to handle it.',
+            title: 'Local push not sent by Customer.io',
+          } as Notification);
+          break;
+
       case ActionItem.SIGN_OUT:
         await onUserStateChanged(undefined);
         break;
@@ -155,6 +156,36 @@ const Dashboard: React.FC<DashboardProps> = ({ navigation }) => {
         break;
     }
   };
+
+  // Setup 3rd party SDK, react-native-notifications
+  // We install this SDK into sample app to make sure the CIO SDK behaves as expected when there is another SDK installed that handles push notifications.
+  //
+  // Important to test that 3rd party SDK is able to decide if a push is shown or not while app is in foreground for non-CIO sent pushes.
+  Notifications.events().registerNotificationReceivedForeground(
+    (notification: Notification, completion) => {
+      console.log(
+        `notification received in foreground: ${notification.title} : ${notification.body}`
+      );
+
+      CustomerIO.track('push should show app in foreground', {
+        push: notification.payload
+      });
+
+      completion({ alert: true, sound: true, badge: true });
+    }
+  );
+  // Important to test that 3rd party SDK is able to receive a callback when a push notification is clicked for non-CIO sent pushes.
+  Notifications.events().registerNotificationOpened(
+    (notification: Notification, completion) => {
+      console.log(
+        `notification opened: ${notification.payload}`
+      );
+
+      CustomerIO.track('push clicked', { push: notification.payload });
+
+      completion();
+    }
+  );
 
   return (
     <View style={styles.container}>
@@ -227,6 +258,10 @@ const ActionItem: Record<string, ActionItemType> = {
     text: 'Show Push Prompt',
     contentDesc: 'Show Push Prompt Button',
   },
+  SHOW_LOCAL_PUSH: {
+    text: 'Show Local Push',
+    contentDesc: 'Show Local Push Button',
+  },  
   SIGN_OUT: {
     text: 'Log Out',
     contentDesc: 'Log Out Button',
