@@ -11,8 +11,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import com.google.gson.Gson
-import io.customer.messaginginapp.R
-import io.customer.messaginginapp.databinding.ActivityGistBinding
+import io.customer.reactnative.sdk.R
+import io.customer.reactnative.sdk.databinding.ActivityGistBinding
 import io.customer.messaginginapp.di.inAppMessagingManager
 import io.customer.messaginginapp.gist.data.model.Message
 import io.customer.messaginginapp.gist.data.model.MessagePosition
