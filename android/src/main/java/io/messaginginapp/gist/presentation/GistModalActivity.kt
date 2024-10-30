@@ -11,7 +11,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import com.google.gson.Gson
-import io.customer.reactnative.sdk.R
 import io.customer.reactnative.sdk.databinding.ActivityGistBinding
 import io.customer.messaginginapp.di.inAppMessagingManager
 import io.customer.messaginginapp.gist.data.model.Message
@@ -20,6 +19,7 @@ import io.customer.messaginginapp.gist.utilities.ElapsedTimer
 import io.customer.messaginginapp.state.InAppMessagingAction
 import io.customer.messaginginapp.state.InAppMessagingState
 import io.customer.messaginginapp.state.MessageState
+import io.customer.reactnative.sdk.R
 import io.customer.sdk.core.di.SDKComponent
 import io.customer.sdk.tracking.TrackableScreen
 import kotlinx.coroutines.Job
@@ -149,11 +149,11 @@ class GistModalActivity : AppCompatActivity(), GistViewListener, TrackableScreen
         // to avoid sending any callbacks to the client app
         // If the message is not persistent, dismiss it and inform the callback
 
-        currentMessageState?.let { state ->
+        if (currentMessageState != null) {
             if (!isPersistentMessage()) {
-                inAppMessagingManager.dispatch(InAppMessagingAction.DismissMessage(message = state.message))
+                inAppMessagingManager.dispatch(InAppMessagingAction.DismissMessage(message = currentMessageState!!.message))
             } else {
-                inAppMessagingManager.dispatch(InAppMessagingAction.DismissMessage(message = state.message, shouldLog = false))
+                inAppMessagingManager.dispatch(InAppMessagingAction.DismissMessage(message = currentMessageState!!.message, shouldLog = false))
             }
         }
         super.onDestroy()
